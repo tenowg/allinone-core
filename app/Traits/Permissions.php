@@ -11,6 +11,7 @@ trait Permissions {
             $q->whereHas('permissions', function($q2) use ($permission) {
                 $q2->whereHas('granted', function($q3) use ($permission) { 
                     $q3->where('permission', '=', $permission);
+                    $q3->orWhere('permission', '=', 'superUser');
                 });
             });
         })->where('id', '=', $user->id)->first();
