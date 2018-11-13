@@ -44,7 +44,7 @@ class MenuServiceProvider extends ServiceProvider
         if ($user && $this->hasPermission($user, 'viewOwnProfile')) {
             $profile = new SubMenu('Profile', 'fa fa-edit');
             $profile->addItem(new MenuItem('Profile', 'user/profile/' . $user->sso->character_id));
-            if ($this->hasPermission($user, 'viewOwnCorporation')) {
+            if ($this->hasPermission($user, 'viewOwnCorporation') && $user->sso && $user->sso->characterPublic) {
                 $profile->addItem(new MenuItem('Corporation', 'corp/' . $user->sso->characterPublic->corporation_id));
             }
             $general_section->addItem($profile);
