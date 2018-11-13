@@ -11,6 +11,7 @@ use App\Jobs\UpdateCorporationJob;
 use EveSSO\EveSSO;
 use EveEsi\Character;
 use EveEsi\Corporation;
+use EveSSO\CorporationPublic;
 
 class UpdateCharacterJob implements ShouldQueue
 {
