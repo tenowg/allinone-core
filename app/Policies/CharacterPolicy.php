@@ -21,6 +21,10 @@ class CharacterPolicy
         //
     }
 
+    public function before($user, $ability) {
+        return $this->hasPermission($user, 'superUser');
+    }
+
     public function viewStats(User $user, CharacterPublic $public) {
         if ($user->sso->character_id === $public->character_id) {
             return $this->hasPermission($user, 'viewOwnStats');

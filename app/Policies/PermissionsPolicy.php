@@ -20,6 +20,10 @@ class PermissionsPolicy
         //
     }
 
+    public function before($user, $ability) {
+        return $this->hasPermission($user, 'superUser');
+    }
+
     public function view(User $user) {
         return $this->hasPermission($user, 'viewPermissionGroup');
     }

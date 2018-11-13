@@ -12,6 +12,10 @@ class CorporationPolicy
 {
     use HandlesAuthorization, Permissions;
 
+    public function before($user, $ability) {
+        return $this->hasPermission($user, 'superUser');
+    }
+    
     /**
      * Determine whether the user can view the corporation public.
      *
