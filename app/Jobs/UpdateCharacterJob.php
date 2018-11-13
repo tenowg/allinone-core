@@ -44,6 +44,8 @@ class UpdateCharacterJob implements ShouldQueue
         UpdateCharacterStatsJob::dispatch($this->sso);
         $char->getCharacterPublic($this->sso);
 
+        $this->sso->refresh();
+
         if ($this->sso->characterPublic) {
             if (!CorporationPublic::whereCorporationId($this->sso->characterPublic->corporation_id)) {
                 UpdateCorporationByIdJob::dispatch($this->sso->characterPublic->corporation_id);
