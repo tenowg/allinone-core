@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use EveEsi\Corporation;
 use EveSSO\CorporationPublic;
 use EveSSO\CharacterPublic;
-use EveEsi\Character;
 use EveSSO\AlliancePublic;
 use App\Jobs\UpdateAllianceByIdJob;
 
@@ -37,14 +36,14 @@ class UpdateCorporationJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Corporation $corp, Character $char, Alliance $esi_alliance)
+    public function handle(Corporation $corp)
     {
         $corp->getCorporationPublic($this->corp->corporation_id);
 
         // Add the CEO Character list if they are not already there
         $ceo = CharacterPublic::find($this->corp->ceo_id);
         if (!$ceo) {
-            $char->getCharacterPublic($this->corp->ceo_id);
+            UpdateCharacterByIdJob::dispatch($this->corp->ceo_id);
         }
         $founder = CharacterPublic::find($this->corp->creator_id);
         if (!$founder) {

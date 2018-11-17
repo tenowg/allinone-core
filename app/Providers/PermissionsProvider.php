@@ -37,6 +37,10 @@ class PermissionsProvider extends ServiceProvider
         $perms->addPermission('viewOtherProfiles', 'Allowed to view other players profiles, Basic permission that allows other permission to add more functiona');
         $perms->addPermission('editOtherProfiles', 'Allowed to edit other players profiles');
         $perms->addPermission('viewOtherStats', 'Allowed to view other players game stats');
+
+        $perms->addPermission('viewOwnIndustryJobs', 'Allowed to view their own industry jobs');
+        $perms->addPermission('viewOwnCorporationIndustryJobs', 'Allowed to view their corporations industry jobs');
+        $perms->addPermission('viewOtherCorporationsIndustryJobs', 'Allowed to view other corporations industry jobs');
     }
 
     /**
