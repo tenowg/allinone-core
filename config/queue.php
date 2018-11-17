@@ -65,6 +65,14 @@ return [
             'block_for' => null,
         ],
 
+        'redis2' => [
+            'driver' => 'redis',
+            'connection' => 'default',
+            'queue' => 'long',
+            'retry_after' => 525,
+            'block_for' => null,
+        ],
+
     ],
 
     /*

@@ -7,10 +7,11 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use EveSSO\AlliancePublic;
-use App\UpdateAllianceJob;
+use EveSSO\EveSSO;
+use EveSSO\CharacterNotifications;
+use EveEsi\Character;
 
-class UpdateAllAlliancesJob implements ShouldQueue
+class UpdateAllNotifications implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -21,7 +22,6 @@ class UpdateAllAlliancesJob implements ShouldQueue
      */
     public function __construct()
     {
-        //
     }
 
     /**
@@ -31,10 +31,10 @@ class UpdateAllAlliancesJob implements ShouldQueue
      */
     public function handle()
     {
-        $alliances = AlliancePublic::all();
-
-        foreach($alliances as $alliance) {
-            UpdateAllianceJob::dispatch($alliance);
-        }
+        EveSSO::chunk(100, function ($users) {
+            foreach($users as $user) {
+                UpdateCharacterNotificationsJob::dispatch($user)->onQueue('long');
+            }
+        });
     }
 }

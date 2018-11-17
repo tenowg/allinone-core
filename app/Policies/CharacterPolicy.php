@@ -22,7 +22,7 @@ class CharacterPolicy
     }
 
     public function before($user, $ability) {
-        return $this->hasPermission($user, 'superUser');
+        if($this->hasPermission($user, 'superUser')) return true;
     }
 
     public function viewStats(User $user, CharacterPublic $public) {

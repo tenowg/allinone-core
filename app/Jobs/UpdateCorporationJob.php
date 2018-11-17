@@ -12,7 +12,6 @@ use EveSSO\CorporationPublic;
 use EveSSO\CharacterPublic;
 use EveEsi\Character;
 use EveSSO\AlliancePublic;
-use EveEsi\Alliance;
 use App\Jobs\UpdateAllianceByIdJob;
 
 class UpdateCorporationJob implements ShouldQueue

@@ -41,8 +41,6 @@ class UpdateCharacterJob implements ShouldQueue
     {
         UpdateCharacterTitlesJob::dispatch($this->sso);
         UpdateCharacterRolesJob::dispatch($this->sso);
-        UpdateCharacterNotificationsJob::dispatch($this->sso);
-        UpdateCharacterStatsJob::dispatch($this->sso);
         $char->getCharacterPublic($this->sso);
 
         $this->sso->refresh();

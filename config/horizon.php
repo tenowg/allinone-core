@@ -89,10 +89,18 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
+                'queue' => ['high', 'default', 'low'],
                 'balance' => 'simple',
-                'processes' => 10,
+                'processes' => 6,
                 'tries' => 3,
+            ],
+            'supervisor-2' => [
+                'connection' => 'redis2',
+                'queue' => ['long'],
+                'balance' => 'simple',
+                'processes' => 6,
+                'tries' => 3,
+                'timeout' => 500,
             ],
         ],
 
@@ -105,11 +113,12 @@ return [
                 'tries' => 3,
             ],
             'supervisor-2' => [
-                'connection' => 'redis',
+                'connection' => 'redis2',
                 'queue' => ['long'],
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 3,
+                'timeout' => 500,
             ],
         ],
     ],

@@ -30,6 +30,7 @@ Route::prefix('/menu')->group(function() {
 
 Route::prefix('user')->middleware('jwt.auth')->group(function() {
     Route::get('current', 'UserController@getCurrentUser');
+    Route::get('all', 'UserController@getUsers');
 });
 
 Route::prefix('permissions')->middleware('jwt.auth')->group(function() {
@@ -37,6 +38,7 @@ Route::prefix('permissions')->middleware('jwt.auth')->group(function() {
     Route::post('create', 'PermissionsController@createPermissionGroup');
     Route::get('groups', 'PermissionsController@listAllGroups');
     Route::post('save', 'PermissionsController@savePermissionGroup');
+    Route::post('save-user/{user}', 'PermissionsController@saveUserPermissions');
 });
 
 Route::prefix('corp')->middleware('jwt.auth')->group(function() {

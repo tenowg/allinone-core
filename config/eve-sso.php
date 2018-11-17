@@ -14,7 +14,9 @@ return [
         Scopes::READ_CHARACTER_SKILLS,
         Scopes::READ_CHARACTER_WALLET,
         Scopes::READ_CHARACTER_INDUSTRY_JOBS,
-        Scopes::READ_CHARACTER_ASSETS
+        Scopes::READ_CHARACTER_ASSETS,
+        Scopes::READ_CORP_INDUSTRY_JOBS,
+        Scopes::READ_CORP_ASSETS,
     ],
-    'main_host' => false
+    'main_host' => true
 ];

@@ -21,7 +21,7 @@ class PermissionsPolicy
     }
 
     public function before($user, $ability) {
-        return $this->hasPermission($user, 'superUser');
+        if($this->hasPermission($user, 'superUser')) return true;
     }
 
     public function view(User $user) {

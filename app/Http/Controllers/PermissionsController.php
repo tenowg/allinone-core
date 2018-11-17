@@ -7,7 +7,11 @@ use App\ViewModels\PermissionDefinitions\Permissions;
 use App\Http\Requests\CreatePermissionGroup;
 use App\Models\Permissions\Permission;
 use App\Http\Requests\SavePermissionsGroup;
+use App\Http\Requests\SetUserPermissions;
 use App\Models\Permissions\GrantedPermission;
+use App\Models\Permissions\UserPermission;
+
+use App\User;
 
 class PermissionsController extends Controller
 {
@@ -39,6 +43,16 @@ class PermissionsController extends Controller
         }
         GrantedPermission::where('perm_id', $request->id)->whereNotIn('permission', $granteds)->delete();
         return $group;
+    }
+
+    public function saveUserPermissions(SetUserPermissions $request, User $user) {
+        $val = $request->validated();
+        $perms_id = [];
+        foreach($val['permissions'] as $perm) {
+            array_push($perms_id,  UserPermission::updateOrCreate(['user_id' => $user->id, 'perm_id' => $perm['id']])->id);
+        }
+        UserPermission::where('user_id' , $user->id)->whereNotIn('id', $perms_id)->delete();
+        return [];
     }
 
     public function listAllGroups() {

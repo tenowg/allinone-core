@@ -8,6 +8,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use EveEsi\Corporation;
+use EveSSO\AlliancePublic;
+use App\Jobs\UpdateAllianceByIdJob;
 
 class UpdateCorporationByIdJob implements ShouldQueue
 {
@@ -35,6 +37,18 @@ class UpdateCorporationByIdJob implements ShouldQueue
      */
     public function handle(Corporation $corp)
     {
-        $corp->getCorporationPublic($this->corp);
+        $update = $corp->getCorporationPublic($this->corp);
+
+        $founder = CharacterPublic::find($update->creator_id);
+        if (!$founder) {
+            UpdateCharacterByIdJob::dispatch($update->creator_id);
+        }
+
+        if ($this->corp->alliance_id) {
+            $alliance = AlliancePublic::find($this->corp->alliance_id);
+            if (!$alliance) {
+                UpdateAllianceByIdJob::dispatch($this->corp->alliance_id);
+            }
+        }
     }
 }
