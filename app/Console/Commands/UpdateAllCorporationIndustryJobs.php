@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use EveSSO\CorporationPublic;
 use App\Jobs\UpdateCorporationIndustryJobs;
+use EveSSO\CharacterPublic;
+use EveSSO\EveSSO;
+use App\Jobs\UpdateCharacterIndustryJob;
 
 class UpdateAllCorporationIndustryJobs extends Command
 {
@@ -42,6 +45,11 @@ class UpdateAllCorporationIndustryJobs extends Command
         CorporationPublic::chunk(100, function($corps) {
             foreach($corps as $corp) {
                 UpdateCorporationIndustryJobs::dispatch($corp)->onQueue('long');
+            }
+        });
+        EveSSO::chunk(100, function($chars) {
+            foreach($chars as $char) {
+                UpdateCharacterIndustryJob::dispatch($char)->onQueue('long');
             }
         });
     }

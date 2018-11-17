@@ -35,6 +35,7 @@ class CharacterController extends Controller
                     }]);
                 }
             }
+            $character->load('jobs');
         }
 
         $return = new \stdClass();
